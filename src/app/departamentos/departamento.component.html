@@ -11,9 +11,9 @@
             <i class="pi pi-user-plus me-2"></i>Novo
           </button>
 
-          <a role="button" class="btn btn-outline-light me-md-1 col-md-2 mt-3" routerLink="/painel">
+          <button role="button" class="btn btn-outline-light me-md-1 col-md-2 mt-3" routerLink="/painel">
             <i class="pi pi-user-plus me-2"></i>Voltar
-          </a>
+          </button>
         </div>
 
         <div class="mt-5">
@@ -26,15 +26,17 @@
               </tr>
             </thead>
             <tbody class="text-center fs-6">
-              <tr *ngFor="let departamento of (departamentos$) |async">
-                <td>{{ departamento.nome }}</td>
+              <tr *ngFor="let departamento of (departamentos$ | async)">
+                <td>{{ departamento.nome }} </td>
                 <td>{{ departamento.telefone }}</td>
                 <td class="d-grid d-md-block">
-                  <button type="button" class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto ">
+                  <button
+                  (click)="gravar(modal, departamento)"
+                  type="button" class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto ">
                     <i class=" pi pi-user-edit"></i>
                   </button>
 
-                  <button type="button" class="btn btn-outline-danger  ">
+                  <button (click)="excluir(departamento)" type="button" class="btn btn-outline-danger  ">
                     <i class=" pi pi-trash"></i>
                   </button>
 
@@ -49,12 +51,13 @@
 
   <ng-template #modal let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Cadastrar Novo Departamento</h4>
+      <h4 class="modal-title" id="modal-basic-title"> {{tituloModal}} de Departamento</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
       <div class="modal-body">
+
         <div class="form-group mb-3">
           <label for="nome" class="form-label">Nome do Departamento</label>
           <input formControlName="nome" class="form-control" type="text"
@@ -62,7 +65,7 @@
         </div>
 
         <div class="form-group mb-3">
-          <label for="telefone" class="form-label">Telefone do Departamento</label>
+          <label for="telefone" class="form-label">Telefone</label>
           <input formControlName="telefone" class="form-control" type="text"
             placeholder="Digite o telefone do seu departamento">
         </div>

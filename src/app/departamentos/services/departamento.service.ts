@@ -20,9 +20,21 @@ export class DepartamentoService {
       return Promise.reject("Item inválido");
 
     const res = await this.registros.add(registro);
+
     registro.id = res.id;
+
     this.registros.doc(res.id).set(registro);
 
+  }
+
+  public async editar(registro: Departamento): Promise<void> {
+
+    return this.registros.doc(registro.id).set(registro);
+
+  }
+
+  public excluir(registro: Departamento):Promise<void>{
+    return this.registros.doc(registro.id).delete();
   }
 
   public selecionarTodos(): Observable<Departamento[]> {
