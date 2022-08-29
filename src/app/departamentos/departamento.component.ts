@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Departamento } from './models/departamento.models';
 import { DepartamentoService } from './services/departamento.service';
 
+
 @Component({
   selector: 'app-departamento',
   templateUrl: './departamento.component.html',
