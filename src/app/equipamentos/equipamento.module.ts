@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 
 
+
 @NgModule({
   declarations: [
     EquipamentoComponent
@@ -15,7 +16,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
     CommonModule,
     NgbModule,
     ReactiveFormsModule,
-    EquipamentoRoutingModule
+    EquipamentoRoutingModule,
+
   ]
 })
 export class EquipamentoModule { }

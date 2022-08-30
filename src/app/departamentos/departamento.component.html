@@ -30,9 +30,8 @@
                 <td>{{ departamento.nome }} </td>
                 <td>{{ departamento.telefone }}</td>
                 <td class="d-grid d-md-block">
-                  <button
-                  (click)="gravar(modal, departamento)"
-                  type="button" class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto ">
+                  <button (click)="gravar(modal, departamento)" type="button"
+                    class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto ">
                     <i class=" pi pi-user-edit"></i>
                   </button>
 
@@ -66,8 +65,7 @@
 
         <div class="form-group mb-3">
           <label for="telefone" class="form-label">Telefone</label>
-          <input formControlName="telefone" class="form-control" type="text"
-            placeholder="Digite o telefone do seu departamento">
+          <input formControlName="telefone" class="form-control" type="tel"  mask="(00) 00000-0000">
         </div>
 
       </div>
