@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+
+import { EMPTY, Observable } from 'rxjs';
 import { Equipamento } from '../model/equipamento.models';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EquipamentoService {
   private registros: AngularFirestoreCollection<Equipamento>;
+
 
 
   constructor(private firestore: AngularFirestore) {
@@ -33,12 +37,14 @@ export class EquipamentoService {
 
   }
 
-  public excluir(registro: Equipamento):Promise<void>{
-    return this.registros.doc(registro.id).delete();
+  public excluir(registro: Equipamento): Promise<void> {
+    return this.registros.doc(registro.id).delete()
   }
 
   public selecionarTodos(): Observable<Equipamento[]> {
-    return this.registros.valueChanges();
+    return this.registros.valueChanges()
   }
+
+
 
 }

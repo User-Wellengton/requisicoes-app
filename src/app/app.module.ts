@@ -17,6 +17,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DepartamentoModule } from './departamentos/departamento.module';
 import { EquipamentoModule } from './equipamentos/equipamento.module';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { EquipamentoModule } from './equipamentos/equipamento.module';
     AngularFireAuthModule,
     AngularFirestoreModule,
     EquipamentoModule,
-    DepartamentoModule
+    DepartamentoModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

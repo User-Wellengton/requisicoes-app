@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Departamento } from './models/departamento.models';
 import { DepartamentoService } from './services/departamento.service';
@@ -18,7 +19,8 @@ export class DepartamentoComponent implements OnInit {
   constructor(
     private departamentoService: DepartamentoService,
     private modalService: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -59,19 +61,28 @@ export class DepartamentoComponent implements OnInit {
 
     try {
       await this.modalService.open(modal).result;
+      
 
-      if (departamento)
-        await this.departamentoService.editar(this.form.value); // caso seja um departamento ja instanciado, vai para o metodo editar
-      else
-        await this.departamentoService.inserir(this.form.value) // caso contrario, é inserido um departamento novo
+      if (departamento){
+        await this.departamentoService.editar(this.form.value);
+        this.toastr.success("Cadastro Editado com sucesso!!")
+      }        // caso seja um departamento ja instanciado, vai para o metodo editar
+      else{
+        await this.departamentoService.inserir(this.form.value)
+        this.toastr.success("Cadastro Inserido com sucesso!!")
+      }
+         // caso contrario, é inserido um departamento novo
 
       console.log("O departamento foi salvo com sucesso");
     } catch (error) {
       console.log(error);
+      this.toastr.error("Não foi possivel cadastrar corretamento!!!")
     }
   }
 
   public excluir(departamento: Departamento) {
     this.departamentoService.excluir(departamento);
+
+    this.toastr.success("Cadastro Excluido com sucesso!!")
   }
 }

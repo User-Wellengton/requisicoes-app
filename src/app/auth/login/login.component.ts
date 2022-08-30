@@ -3,6 +3,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService
   ) { }
 
 
@@ -56,10 +58,12 @@ export class LoginComponent implements OnInit {
 
       if (resposta?.user) {
         this.router.navigate(["/painel"])
+        this.toastr.success("Login efetuado com secesso!!")
       }
 
     } catch (error) {
       console.log(error)
+      this.toastr.error("Não foi possivel Fazer o Login!!")
     }
   }
 
