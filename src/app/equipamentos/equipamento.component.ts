@@ -87,7 +87,7 @@ export class EquipamentoComponent implements OnInit {
 
       console.log("O equipamento foi salvo com sucesso");
     } catch (error) {
-      console.log(error);
+      if(error != "fechar")
       this.toastr.error("Não foi possivel cadastrar corretamento!!!")
     }
   }

@@ -61,7 +61,7 @@ export class DepartamentoComponent implements OnInit {
 
     try {
       await this.modalService.open(modal).result;
-      
+
 
       if (departamento){
         await this.departamentoService.editar(this.form.value);
@@ -75,7 +75,7 @@ export class DepartamentoComponent implements OnInit {
 
       console.log("O departamento foi salvo com sucesso");
     } catch (error) {
-      console.log(error);
+      if(error != "fechar")
       this.toastr.error("Não foi possivel cadastrar corretamento!!!")
     }
   }
