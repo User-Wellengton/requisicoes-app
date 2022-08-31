@@ -6,6 +6,7 @@ import { DepartamentoComponent } from './departamento.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaskModule } from 'ngx-mask';
+import { DepartamentoService } from './services/departamento.service';
 
 
 
@@ -20,6 +21,11 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveFormsModule,
     DepartamentoRoutingModule,
     NgxMaskModule.forChild()
+  ]
+
+  ,
+  providers: [
+    DepartamentoService
   ]
 })
 export class DepartamentoModule { }
