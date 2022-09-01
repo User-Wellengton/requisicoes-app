@@ -14,12 +14,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { PainelComponent } from './painel/painel.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { DepartamentoModule } from './departamentos/departamento.module';
-import { EquipamentoModule } from './equipamentos/equipamento.module';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from 'ngx-mask';
+import { RouterModule } from '@angular/router';
+
 
 
 
@@ -40,12 +41,10 @@ import { NgxMaskModule } from 'ngx-mask';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    EquipamentoModule,
-    DepartamentoModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-    NgxMaskModule.forRoot({dropSpecialCharacters:false})
-
+    NgxMaskModule.forRoot({ dropSpecialCharacters: false }),
+    RouterModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
