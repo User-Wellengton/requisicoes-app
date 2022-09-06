@@ -25,9 +25,9 @@ export class PainelComponent implements OnInit, OnDestroy {
 
   }
 
-ngOnDestroy(): void {
-  this.usuarioLogado$.unsubscribe();
-}
+  ngOnDestroy(): void {
+    this.usuarioLogado$.unsubscribe();
+  }
 
 
   public sair() {

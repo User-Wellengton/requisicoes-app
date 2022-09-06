@@ -1,8 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { Departamento } from '../departamentos/models/departamento.models';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Funcionario } from './model/funcionario.models';
@@ -19,8 +21,11 @@ export class FuncionarioComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private router: Router,
+    private authService: AuthenticationService,
     private funcionarioService: FuncionarioService,
     private departamentoService: DepartamentoService,
+
     private modalService: NgbModal,
     private fb: FormBuilder,
     private toastr: ToastrService
@@ -28,12 +33,17 @@ export class FuncionarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      id: new FormControl(""),
-      nome: new FormControl(""),
-      email: new FormControl(""),
-      funcao: new FormControl(""),
-      departamentoId: new FormControl(""),
-      departamento: new FormControl(""),
+      funcionario: new FormGroup({
+        id: new FormControl(""),
+        nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
+        email: new FormControl("", [Validators.required, Validators.email]),
+        funcao: new FormControl("", [Validators.required, Validators.minLength(3)]),
+        departamentoId: new FormControl("", [Validators.required]),
+        departamento: new FormControl("")
+
+
+      }),
+      senha: new FormControl("", [Validators.required])
     })
 
     this.funcionarios$ = this.funcionarioService.selecionarTodos();
@@ -45,64 +55,78 @@ export class FuncionarioComponent implements OnInit {
     return this.id?.value ? "Atualização" : "Cadastro";
   }
 
-  get nomeString(): string {
-    return this.nome?.value;
+  get id(): AbstractControl | null {
+    return this.form.get("funcionario.id");
   }
 
-  get id() {
-    return this.form.get("id");
+  get nome(): AbstractControl | null {
+    return this.form.get("funcionario.nome");
   }
 
-  get nome() {
-    return this.form.get("nome");
+  get email(): AbstractControl | null {
+    return this.form.get("funcionario.email");
   }
 
-  get email() {
-    return this.form.get("email");
+  get funcao(): AbstractControl | null {
+    return this.form.get("funcionario.funcao");
   }
 
-  get funcao() {
-    return this.form.get("funcao");
+  get departamentoId(): AbstractControl | null {
+    return this.form.get("funcionario.departamentoId");
   }
 
-  get departamentoId() {
-    return this.form.get("departamentoId");
+  get senha(): AbstractControl | null {
+    return this.form.get("senha");
   }
 
-  get departamento() {
-    return this.form.get("departamento");
-  }
+
 
   public async gravar(modal: TemplateRef<any>, funcionario?: Funcionario) {
 
     this.form.reset(); //para limpar todos os dados do formulario, caso possa ter
 
 
-    // esse if seria para caso o objeto selecionado já seja um departamento, assim já retorna o próprio departamento da EDIÇÂO
+
     if (funcionario) {
       const departamento = funcionario.departamento ? funcionario.departamento : null;
 
       const funcionarioCompleto = {
-          ...funcionario,
-          departamento
+        ...funcionario,
+        departamento
 
       }
 
-      this.form.setValue(funcionarioCompleto);
+      this.form.get("funcionario")?.setValue(funcionarioCompleto);
 
     }
 
     try {
       await this.modalService.open(modal).result;
 
+      if (this.nome?.invalid) {
+        this.toastr.error("O nome do funcionário está invalido")
+      }
+
+
       if (funcionario) {
-        await this.funcionarioService.editar(this.form.value); // caso seja um departamento ja instanciado, vai para o metodo editar
+        await this.funcionarioService.editar(this.form.get("funcionario")?.value);
         this.toastr.success("Cadastro Editado com sucesso!!")
       }
 
       else {
-        await this.funcionarioService.inserir(this.form.value) // caso contrario, é inserido um departamento novo
+let usuarioAtual = this.authService.getUsuario();
+
+        await this.authService.cadastrar(this.email?.value, this.senha?.value);
+
+        await this.funcionarioService.inserir(this.form.get("funcionario")?.value)
+
+        await this.authService.atualizarUsuario(await usuarioAtual);
+
         this.toastr.success("Cadastro Inserido com sucesso!!")
+
+        await this.authService.logout();
+
+        await this.router.navigate(["/login"])
       }
 
       console.log("O funcionario foi salvo com sucesso");
