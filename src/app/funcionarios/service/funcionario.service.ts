@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { Departamento } from 'src/app/departamentos/models/departamento.models';
 import { Funcionario } from '../model/funcionario.models';
 
@@ -8,13 +8,10 @@ import { Funcionario } from '../model/funcionario.models';
   providedIn: 'root'
 })
 export class FuncionarioService {
-  private registros: AngularFirestoreCollection<Funcionario>;
+  private registros: AngularFirestoreCollection<Funcionario>
 
-
-
-  constructor(private firestore: AngularFirestore) {
-    this.registros = this.firestore.collection<Funcionario>("funcionarios");
-
+  constructor(private fireStore: AngularFirestore) {
+    this.registros = this.fireStore.collection<Funcionario>("funcionarios");
   }
 
   public async inserir(registro: Funcionario): Promise<any> {
@@ -26,17 +23,14 @@ export class FuncionarioService {
     registro.id = res.id;
 
     this.registros.doc(res.id).set(registro);
-
   }
 
   public async editar(registro: Funcionario): Promise<void> {
-
     return this.registros.doc(registro.id).set(registro);
-
   }
 
   public excluir(registro: Funcionario): Promise<void> {
-    return this.registros.doc(registro.id).delete()
+    return this.registros.doc(registro.id).delete();
   }
 
   public selecionarTodos(): Observable<Funcionario[]> {
@@ -44,14 +38,23 @@ export class FuncionarioService {
       .pipe(
         map((funcionarios: Funcionario[]) => {
           funcionarios.forEach(funcionario => {
-            this.firestore
+            this.fireStore
               .collection<Departamento>("departamentos")
               .doc(funcionario.departamentoId)
               .valueChanges()
-              .subscribe(x => funcionario.departamento = x);
+              .subscribe(x => funcionario.departamento = x)
           });
           return funcionarios;
         })
-      )
+      );
+  }
+
+  public selecionarFuncionarioLogado(email: string) {
+    return this.fireStore.collection<Funcionario>("funcionarios",
+      ref => ref.where("email", "==", email)).valueChanges()
+      .pipe(
+        take(1),
+        map(funcionarios => funcionarios[0])
+      );
   }
 }

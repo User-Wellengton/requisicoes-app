@@ -50,19 +50,15 @@ export class RequisicaoService {
               .doc(requisicao.departamentoId)
               .valueChanges()
               .subscribe(x => requisicao.departamento = x);
-          });
-          return requisicoes;
-        }),
-        map((requisicoes: Requisicao[]) => {
-          requisicoes.forEach(requisicao => {
-            this.firestore
-              .collection<Equipamento>("equipamentos")
-              .doc(requisicao.equipamentoId)
-              .valueChanges()
-              .subscribe(x => requisicao.equipamento = x);
+            if (requisicao.equipamentoId)
+              this.firestore
+                .collection<Equipamento>("equipamentos")
+                .doc(requisicao.equipamentoId)
+                .valueChanges()
+                .subscribe(x => requisicao.equipamento = x)
           });
           return requisicoes;
         })
-      )
+      );
   }
 }

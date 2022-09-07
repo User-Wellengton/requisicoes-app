@@ -3,6 +3,19 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-10 col-lg-9 mx-auto">
+
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+          (click)="obterMinhasRequisicoes()">
+          <label class="btn btn-light me-md-1  mt-5" for="btnradio1">Minha requisição</label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+          (click)="obterRequisicoesDoMeuDepartamento()">
+          <label class="btn btn-outline-light me-md-1  mt-5" for="btnradio2">Requisições para meu departamento</label>
+
+        </div>
+
         <div class="text-center text-md-start">
           <h1 class="fw-bold mt-4">Requisições</h1>
         </div>
@@ -105,9 +118,7 @@
               {{equipamento.nomeEquipamento}}
             </ng-option>
           </ng-select>
-          <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
-            <span *ngIf=" departamentoId?.errors?.['required']">O departamento precisa ser selecionado</span>
-          </div>
+
         </div>
 
       </div>

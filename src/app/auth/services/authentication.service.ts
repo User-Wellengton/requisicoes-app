@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public usuarioLogado: Observable<firebase.User | null>;
-
+  public usuarioLogado: Observable<firebase.User | null>
 
   constructor(private auth: AngularFireAuth) {
     this.usuarioLogado = auth.authState;
@@ -27,24 +26,21 @@ export class AuthenticationService {
     return this.auth.signOut();
   }
 
-  public resetarSenha(email: string): Promise<void> {
-    return this.auth.sendPasswordResetEmail(email);
-  }
-
-  public getUsuario(): Promise<firebase.User | null> {
+  public getUser(): Promise<firebase.User | null> {
+    console.log(this.auth.currentUser);
     return this.auth.currentUser;
   }
 
-
-  public atualizarUsuario(usuario: firebase.User | null) {
-
+  public updateUser(usuario: firebase.User | null) {
     return this.auth.updateCurrentUser(usuario);
   }
 
+  public getEmail() {
+    console.log(firebase.auth().currentUser?.email!)
+    return firebase.auth().currentUser?.email!;
+  }
 
-public getUid() {
-  return firebase.auth().currentUser?.uid.toString();
-}
-
-
+  public resetarSenha(email: string): Promise<void> {
+    return this.auth.sendPasswordResetEmail(email);
+  }
 }
