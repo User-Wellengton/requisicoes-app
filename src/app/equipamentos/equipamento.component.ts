@@ -95,7 +95,7 @@ export class EquipamentoComponent implements OnInit {
   public excluir(equipamento: Equipamento) {
     this.equipamentoService.excluir(equipamento);
 
-    this.toastr.success("Cadastro Excluido com sucesso!!")
+    this.toastr.warning(`'${equipamento.id}' excluída`, "Exclusão de requisições");
   }
 }
 

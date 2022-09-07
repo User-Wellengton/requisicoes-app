@@ -83,6 +83,6 @@ export class DepartamentoComponent implements OnInit {
   public excluir(departamento: Departamento) {
     this.departamentoService.excluir(departamento);
 
-    this.toastr.success("Cadastro Excluido com sucesso!!")
+    this.toastr.warning(`'${departamento.id}' excluída`, "Exclusão de requisições");
   }
 }
