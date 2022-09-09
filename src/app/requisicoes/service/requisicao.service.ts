@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { map, Observable } from 'rxjs';
 import { Departamento } from 'src/app/departamentos/models/departamento.models';
 import { Equipamento } from 'src/app/equipamentos/model/equipamento.models';
+import { Funcionario } from 'src/app/funcionarios/model/funcionario.models';
 import { Requisicao } from '../model/requisicao.models';
 
 @Injectable({
@@ -50,6 +51,13 @@ export class RequisicaoService {
               .doc(requisicao.departamentoId)
               .valueChanges()
               .subscribe(x => requisicao.departamento = x);
+
+            this.firestore
+              .collection<Funcionario>("funcionarios")
+              .doc(requisicao.solicitanteId)
+              .valueChanges()
+              .subscribe(x => requisicao.solicitante = x)
+
             if (requisicao.equipamentoId)
               this.firestore
                 .collection<Equipamento>("equipamentos")
@@ -61,4 +69,16 @@ export class RequisicaoService {
         })
       );
   }
+
+  public selecionarRequisicoesFuncionarioAtual(id: string) {
+    return this.selecionarTodos()
+      .pipe(
+        map(requisicoes => {
+          return requisicoes.filter(req => req.solicitanteId === id)
+        })
+      )
+
+
+  }
+
 }
