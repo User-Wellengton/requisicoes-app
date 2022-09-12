@@ -2,7 +2,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-10 col-lg-9 mx-auto">      
+      <div class="col-12 col-md-10 col-lg-9 mx-auto">
         <div class="text-center text-md-start">
           <h1 class="fw-bold mt-4">Requisições</h1>
         </div>
@@ -29,7 +29,7 @@
             </thead>
             <tbody class="text-center fs-6">
               <tr *ngFor="let requisicao of (requisicoes$ | async)">
-                <td>{{ requisicao.abertura | date: 'dd/MM/yyyy' }} </td>
+                <td>{{ requisicao.abertura.toDate() | date: 'dd/MM/yyyy' }} </td>
                 <td>{{ requisicao.departamento?.nome }} </td>
                 <td>{{ requisicao.descricao}} </td>
                 <td>{{ requisicao.equipamento ? requisicao.equipamento.nomeEquipamento : "Não selecionado" }}</td>

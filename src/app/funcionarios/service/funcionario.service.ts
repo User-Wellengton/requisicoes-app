@@ -49,9 +49,12 @@ export class FuncionarioService {
       );
   }
 
-  public selecionarFuncionarioLogado(email: string) : Observable<Funcionario> {
+  public selecionarFuncionarioLogado(email: string): Observable<Funcionario> {
     return this.fireStore.collection<Funcionario>("funcionarios",
-      ref => ref.where("email", "==", email)).valueChanges()
+      ref => {
+        return ref.where("email", "==", email)
+      })
+      .valueChanges()
       .pipe(
         take(1),
         map(funcionarios => funcionarios[0])
