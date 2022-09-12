@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { Departamento } from 'src/app/departamentos/models/departamento.models';
 import { Equipamento } from 'src/app/equipamentos/model/equipamento.models';
 import { Funcionario } from 'src/app/funcionarios/model/funcionario.models';
@@ -87,6 +87,16 @@ export class RequisicaoService {
           return requisicoes.filter(req => req.departamentoId === departamentoId)
         })
       )
+  }
+
+  public selecionarPorId(id: string): Observable<Requisicao> {
+    return this.selecionarTodos()
+      .pipe(
+        take(1),
+        map(requisicoes => {
+          return requisicoes.filter(req => req.id === id)[0];
+        })
+      );
   }
 
 }
