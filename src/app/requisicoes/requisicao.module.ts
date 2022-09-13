@@ -13,12 +13,14 @@ import { RequisicoesDepartamentoComponent } from './requisicoes-departamento/req
 import { DetalhesComponent } from './detalhes/detalhes.component';
 
 
+
 @NgModule({
   declarations: [
     RequisicaoComponent,
     RequisicoesFuncionarioComponent,
     RequisicoesDepartamentoComponent,
-    DetalhesComponent
+    DetalhesComponent,
+   
   ],
   imports: [
     CommonModule,
