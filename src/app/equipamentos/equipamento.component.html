@@ -102,6 +102,7 @@
            class="form-control" type="date">
            <div class="invalid-tooltip" *ngIf="dataFabricacao?.touched && dataFabricacao?.invalid">
             <span *ngIf=" dataFabricacao?.errors?.['required']">A data de Fabricacao precisa ser preenchido</span>
+            <span *ngIf=" dataFabricacao?.errors?.['datafutura']">A data de Fabricacao precisa ser antes da data de HOJE!!</span>
           </div>
         </div>
 
