@@ -11,6 +11,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RequisicoesFuncionarioComponent } from './requisicoes-funcionario/requisicoes-funcionario.component';
 import { RequisicoesDepartamentoComponent } from './requisicoes-departamento/requisicoes-departamento.component';
 import { DetalhesComponent } from './detalhes/detalhes.component';
+import { RequisicoesDepartamentoPipe } from './pipes/requisicoes-departamento.pipe';
+import { RequisicoesFuncionarioPipe } from './pipes/requisicoes-funcionario.pipe';
 
 
 
@@ -20,6 +22,8 @@ import { DetalhesComponent } from './detalhes/detalhes.component';
     RequisicoesFuncionarioComponent,
     RequisicoesDepartamentoComponent,
     DetalhesComponent,
+    RequisicoesDepartamentoPipe,
+    RequisicoesFuncionarioPipe,
    
   ],
   imports: [

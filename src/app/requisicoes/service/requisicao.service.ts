@@ -70,24 +70,6 @@ export class RequisicaoService {
       );
   }
 
-  public selecionarRequisicoesFuncionarioAtual(id: string) {
-    return this.selecionarTodos()
-      .pipe(
-        map(requisicoes => {
-          return requisicoes.filter(req => req.solicitanteId === id)
-        })
-      )
-  }
-
-
-  public selecionarRequisicoesPorDepartamentoId(departamentoId: string) {
-    return this.selecionarTodos()
-      .pipe(
-        map(requisicoes => {
-          return requisicoes.filter(req => req.departamentoId === departamentoId)
-        })
-      )
-  }
 
   public selecionarPorId(id: string): Observable<Requisicao> {
     return this.selecionarTodos()

@@ -26,7 +26,7 @@ export class RequisicoesFuncionarioComponent implements OnInit,OnDestroy {
 
   private processoAutenticado$: Subscription;
 
-  private funcionarioLogado: Funcionario;
+  public funcionarioLogado: Funcionario;
 
   private funcionarioLogadoId: string;
 
@@ -68,6 +68,7 @@ export class RequisicoesFuncionarioComponent implements OnInit,OnDestroy {
 
     this.departamentos$ = this.departamentoService.selecionarTodos();
     this.equipamentos$ = this.equipamentoService.selecionarTodos();
+    this.requisicoes$ = this.requisicaoService.selecionarTodos();
 
 
     this.processoAutenticado$ = this.authService.usuarioLogado.subscribe(usuario => {
@@ -75,12 +76,7 @@ export class RequisicoesFuncionarioComponent implements OnInit,OnDestroy {
 
 
       this.funcionarioService.selecionarFuncionarioLogado(email)
-        .subscribe(funcionario => {
-          this.funcionarioLogadoId = funcionario.id;
-          this.requisicoes$ =
-          this.requisicaoService.selecionarRequisicoesFuncionarioAtual(this.funcionarioLogadoId);
-
-        });
+        .subscribe(funcionario => this.funcionarioLogado = funcionario);
     })
   }
 
@@ -167,7 +163,7 @@ export class RequisicoesFuncionarioComponent implements OnInit,OnDestroy {
     this.form.get("abertura")?.setValue(new Date());
     this.form.get("ultimaAtualizacao")?.setValue(new Date());
     this.form.get("equipamentoId")?.setValue(null);
-    this.form.get("solicitanteId")?.setValue(this.funcionarioLogadoId);
+    this.form.get("solicitanteId")?.setValue(this.funcionarioLogado.id);
   }
 
 }
